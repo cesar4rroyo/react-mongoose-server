@@ -3,8 +3,8 @@ import User from "../models/user.model";
 
 export async function show(req: Request, res: Response): Promise<void> {
   try {
-    const { id } = req.params;
-    const user = await User.findById(id);
+    const { userId } = req.params;
+    const user = await User.findById(userId);
     if (!user) {
       throw new Error("User not found");
     }
@@ -20,7 +20,7 @@ export async function create(req: Request, res: Response): Promise<void> {
     const user = await User.create({ user_github, email });
     res.status(201).json({ data: user });
   } catch (error) {
-    res.status(404).json({ message: "User not found" });
+    res.status(404).json({ message: "User params not found" });
   }
 }
 export async function list(req: Request, res: Response): Promise<void> {
@@ -28,7 +28,7 @@ export async function list(req: Request, res: Response): Promise<void> {
     const users = await User.find();
 
     if (!users) {
-      throw new Error("Users is empty");
+      throw new Error("Server Error");
     }
 
     res.status(200).json({ message: "Users list found", data: users });
